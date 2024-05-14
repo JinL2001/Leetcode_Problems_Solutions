@@ -1,0 +1,20 @@
+class Solution:
+    def lemonadeChange(self, bills: List[int]) -> bool:
+        five, ten = 0, 0  # Track $5 and $10 bills
+        for bill in bills:
+            if bill == 5:
+                five += 1  # Accept a $5 bill
+            elif bill == 10:
+                if five == 0:  # Need a $5 bill to give change
+                    return False
+                five -= 1  # Give change
+                ten += 1  # Accept a $10 bill
+            elif bill == 20:
+                if ten > 0 and five > 0:  # Prefer to give one $10 and one $5 as change
+                    ten -= 1
+                    five -= 1
+                elif five >= 3:  # Alternatively, give three $5 bills
+                    five -= 3
+                else:
+                    return False  # Can't provide correct change
+        return True

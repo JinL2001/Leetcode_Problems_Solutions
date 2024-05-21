@@ -1,0 +1,31 @@
+from typing import List
+import string
+
+class Solution:
+    def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
+        # Convert to lowercase
+        paragraph = paragraph.lower()
+        
+        # Remove punctuation by replacing each with a space
+        for char in string.punctuation:
+            paragraph = paragraph.replace(char, " ")
+        
+        # Split the paragraph into words
+        words = paragraph.split()
+        
+        # Convert banned list to a set for O(1) lookups
+        banned_set = set(banned)
+        
+        # Count the frequency of each non-banned word
+        word_count = {}
+        for word in words:
+            if word not in banned_set:
+                if word in word_count:
+                    word_count[word] += 1
+                else:
+                    word_count[word] = 1
+        
+        # Find the most frequent non-banned word
+        most_common_word = max(word_count, key=word_count.get)
+        
+        return most_common_word

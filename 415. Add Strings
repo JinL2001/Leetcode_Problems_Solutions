@@ -1,0 +1,20 @@
+class Solution:
+    def addStrings(self, num1: str, num2: str) -> str:
+        i, j = len(num1) - 1, len(num2) - 1  # Pointers to the end of each string
+        carry = 0  # Variable to store carry
+        result = []  # List to store the result digits
+        
+        # Loop until both strings are fully traversed and no carry remains
+        while i >= 0 or j >= 0 or carry:
+            n1 = int(num1[i]) if i >= 0 else 0  # Get digit from num1 or 0 if out of range
+            n2 = int(num2[j]) if j >= 0 else 0  # Get digit from num2 or 0 if out of range
+            
+            total = n1 + n2 + carry  # Add the digits and carry
+            carry = total // 10  # Update carry
+            result.append(total % 10)  # Store the result's unit digit
+            
+            i -= 1  # Move to the next digit to the left in num1
+            j -= 1  # Move to the next digit to the left in num2
+        
+        # Reverse the result list to get the correct order and convert to string
+        return ''.join(map(str, result[::-1]))
